@@ -1,0 +1,104 @@
+﻿@page "/game"
+
+<PageTitle>Game of Life</PageTitle>
+
+@using GameOfLife.Data
+<div class="game">
+    @for(var y = 0 ; y < game.MaxY; y++)
+    {
+        <div class="game-row">
+    
+@for(var x = 0; x < game.MaxX; x++)
+{
+        var index = x + (y * game.MaxX);
+
+        if(game.Board[index])
+        {
+            <span class="live-cell" @onclick="() => Toggle(index)"></span>
+        }
+        else
+        {
+            <span class="dead-cell" @onclick="() => Toggle(index)"></span>
+        }
+    }
+    </div>
+    }
+
+</div>
+<hr/>
+<button class="btn btn-primary" @onclick="Advance">Advance</button>
+&nbsp;
+@if(!isRunning)
+{
+<button class="btn btn-primary" @onclick="Start">Play</button>
+}
+
+else
+{
+<button class="btn btn-primary" @onclick="Stop">Pause</button>
+}
+&nbsp;
+X<input type="number" min=1 max =100 step=1 @bind=maxX />
+Y<input type="number" min=1 max =100 step=1 @bind=maxY />
+Cells<input type="number" min=0 max=@(maxX * maxY) step=1 @bind=startingCells/>
+&nbsp;
+<button class="btn btn-secondary" @onclick="Initialise">Reset</button>
+&nbsp;
+<button class="btn btn-secondary" @onclick="Clear">Clear</button>
+@code {
+    private int maxX = 100;
+    private int maxY = 50;
+    private int startingCells = 1500;
+    private GameBoard game;
+    private Timer timer = new Timer(1000);
+    private bool isRunning = false;
+
+    protected override void OnInitialized()
+    {
+        Initialise();
+        timer.Elapsed += TimerElapsed!;
+    }
+
+    private void Initialise()
+    {
+        game = new GameBoard(maxX, maxY, startingCells);
+        game.InitialiseBoard();
+    }
+
+    private void Advance()
+    {
+        game.AdvanceGeneration();
+    }
+
+    private void Start()
+    {
+        isRunning = true;
+        timer.Start();
+    }
+
+    private void Stop()
+    {
+        isRunning = false;
+        timer.Stop();
+    }
+
+    private void Toggle(int index)
+    {
+        game.ToggleCell(index);
+    }
+
+    private void Clear()
+    {
+        Stop();
+        game = new GameBoard(maxX, maxY, 0);
+    }
+
+    private async void TimerElapsed(Object source, ElapsedEventArgs e)
+    {
+        await InvokeAsync(() =>
+        {
+            Advance();
+            StateHasChanged();
+        });
+    }
+}
