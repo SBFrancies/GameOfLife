@@ -2,31 +2,34 @@
 {
     public class GameBoard
     {
-        public int MaxX { get; }
+        private readonly int _startingCells;
 
-        public int MaxY { get; }
+        private readonly Random _random = new();
 
-        public int StartingCells { get; }
-
-        public bool[] Board { get; private  set; }
-
-        private readonly Random random = new();
+        public GameBoard(int maxX, int maxY) : this(maxX, maxY, 0)
+        {
+        }
 
         public GameBoard(int maxX, int maxY, int startingCells)
         {
+            _startingCells = startingCells;
+
             MaxX = maxX;
             MaxY = maxY;
-            StartingCells = startingCells;
-
             Board = new bool[maxX * maxY];
         }
+
+        public int MaxX { get; }
+        public int MaxY { get; }
+        public bool[] Board { get; private set; }
+
         public void InitialiseBoard()
         {
             var startingCells = new HashSet<int>();
 
-            while (startingCells.Count < StartingCells)
+            while (startingCells.Count < _startingCells)
             {
-                var cell = random.Next(0, Board.Length);
+                var cell = _random.Next(0, Board.Length);
                 startingCells.Add(cell);
             }
 
@@ -49,19 +52,18 @@
             {
                 var neighbours = Neighbours(i);
 
-                if (Board[i] && (neighbours < 2 || neighbours > 3))
+                switch (neighbours)
                 {
-                    newBoard[i] = false;
-                }
-
-                else if(!Board[i] && neighbours == 3)
-                {
-                    newBoard[i] = true;
-                }
-
-                else
-                {
-                    newBoard[i] = Board[i];
+                    case < 2:
+                    case > 3:
+                        newBoard[i] = false;
+                        break;
+                    case 3:
+                        newBoard[i] = true;
+                        break;
+                    default:
+                        newBoard[i] = Board[i];
+                        break;
                 }
             }
 
