@@ -48,7 +48,7 @@ namespace GameOfLife.Tests
 
         }
 
-        private GameBoard CreateSystemUnderTest(int maxX = 3, int maxY = 3)
+        private static GameBoard CreateSystemUnderTest(int maxX = 3, int maxY = 3)
         {
             return new GameBoard(maxX, maxY);
         }

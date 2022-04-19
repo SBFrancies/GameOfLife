@@ -6,11 +6,7 @@
 
         private readonly Random _random = new();
 
-        public GameBoard(int maxX, int maxY) : this(maxX, maxY, 0)
-        {
-        }
-
-        public GameBoard(int maxX, int maxY, int startingCells)
+        public GameBoard(int maxX, int maxY, int startingCells = 0)
         {
             _startingCells = startingCells;
 
@@ -52,19 +48,13 @@
             {
                 var neighbours = Neighbours(i);
 
-                switch (neighbours)
+                newBoard[i] = neighbours switch
                 {
-                    case < 2:
-                    case > 3:
-                        newBoard[i] = false;
-                        break;
-                    case 3:
-                        newBoard[i] = true;
-                        break;
-                    default:
-                        newBoard[i] = Board[i];
-                        break;
-                }
+                    < 2 => false,
+                    > 3 => false,
+                    3 => true,
+                    _ => Board[i]
+                };
             }
 
             Board = newBoard;

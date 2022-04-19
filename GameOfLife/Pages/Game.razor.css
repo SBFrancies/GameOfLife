@@ -22,3 +22,7 @@
     margin:0;
     line-height:10px;
 }
+
+.game {
+    overflow: hidden;
+}
