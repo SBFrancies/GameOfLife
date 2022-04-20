@@ -35,5 +35,5 @@ jobs:
         repository: gameoflife
         image: gameoflife
         folder: GameOfLife
-        dockerfile: GameOfLife/Dockerfile
+        dockerfile: Dockerfile
         branch: master
