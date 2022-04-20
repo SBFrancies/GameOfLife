@@ -34,6 +34,5 @@ jobs:
         registry: ${{ secrets.ACR }}
         repository: gameoflife
         image: gameoflife
-        folder: GameOfLife
-        dockerfile: Dockerfile
+        dockerfile: GameOfLife/Dockerfile
         branch: master
