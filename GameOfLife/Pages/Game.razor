@@ -52,7 +52,7 @@ Cells<input type="number" min=0 max=@(_maxX * _maxY) step=1 @bind=_startingCells
     private int _maxY = 50;
     private int _startingCells = 1500;
     private GameBoard _game = new(100, 50, 1500);
-    private readonly Timer _timer = new(1000);
+    private readonly Timer _timer = new(500);
     private bool _isRunning;
 
     protected override void OnInitialized()
