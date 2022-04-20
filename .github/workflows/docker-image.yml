@@ -24,16 +24,16 @@ jobs:
       
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file GameOfLife/Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file GameOfLife/Dockerfile --tag gameoflife:$(date +%s)
 
     - uses: azure/acr-build@v1
       with:
-        service_principal: ${{ secrets.SP_NAME }}
+        service_principal: ${{ secrets.SP_ID }}
         service_principal_password: ${{ secrets.SP_PASSWORD }}
         tenant: ${{ secrets.SP_TENANT }}
         registry: ${{ secrets.ACR }}
         repository: gameoflife
-        image: image
+        image: gameoflife
         folder: GameOfLife
         dockerfile: GameOfLife/Dockerfile
         branch: master
