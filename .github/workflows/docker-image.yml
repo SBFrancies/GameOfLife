@@ -28,7 +28,7 @@ jobs:
 
     - uses: azure/acr-build@v1
       with:
-        service_principal: ${{ secrets.SP_ID }}
+        service_principal: ${{ secrets.SP_NAME }}
         service_principal_password: ${{ secrets.SP_PASSWORD }}
         tenant: ${{ secrets.SP_TENANT }}
         registry: ${{ secrets.ACR }}
