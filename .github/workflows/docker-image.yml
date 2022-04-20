@@ -33,6 +33,6 @@ jobs:
         tenant: ${{ secrets.SP_TENANT }}
         registry: ${{ secrets.ACR }}
         repository: gameoflife
-        image: gameoflife
+        image: gameoflife:latest
         dockerfile: GameOfLife/Dockerfile
         branch: master
