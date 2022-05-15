@@ -43,7 +43,7 @@ X<input type="number" min=1 max=100 step=1 @bind=_maxX/>
 Y<input type="number" min=1 max=100 step=1 @bind=_maxY/>
 Cells<input type="number" min=0 max=@(_maxX * _maxY) step=1 @bind=_startingCells/>
 &nbsp;
-<button class="btn btn-secondary" @onclick="Initialise">Reset</button>
+<button class="btn btn-secondary" @onclick="Reset">Reset</button>
 &nbsp;
 <button class="btn btn-secondary" @onclick="Clear">Clear</button>
 
@@ -57,13 +57,14 @@ Cells<input type="number" min=0 max=@(_maxX * _maxY) step=1 @bind=_startingCells
 
     protected override void OnInitialized()
     {
-        Initialise();
+        _game.ResetBoard();
         _timer.Elapsed += TimerElapsed!;
     }
 
-    private void Initialise()
+    private void Reset()
     {
-        _game.InitialiseBoard();
+        _game = new GameBoard(_maxX, _maxY, _startingCells);
+        _game.ResetBoard();
     }
 
     private void Advance()

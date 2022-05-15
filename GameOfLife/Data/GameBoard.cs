@@ -19,20 +19,10 @@
         public int MaxY { get; }
         public bool[] Board { get; private set; }
 
-        public void InitialiseBoard()
+        public void ResetBoard()
         {
-            var startingCells = new HashSet<int>();
-
-            while (startingCells.Count < _startingCells)
-            {
-                var cell = _random.Next(0, Board.Length);
-                startingCells.Add(cell);
-            }
-
-            foreach (var cell in startingCells)
-            {
-                Board[cell] = true;
-            }
+            Board = new bool[MaxX * MaxY];
+            InitialiseBoard();
         }
 
         public void ToggleCell(int index)
@@ -58,6 +48,22 @@
             }
 
             Board = newBoard;
+        }
+
+        private void InitialiseBoard()
+        {
+            var startingCells = new HashSet<int>();
+
+            while (startingCells.Count < _startingCells)
+            {
+                var cell = _random.Next(0, Board.Length);
+                startingCells.Add(cell);
+            }
+
+            foreach (var cell in startingCells)
+            {
+                Board[cell] = true;
+            }
         }
 
         private int Neighbours(int index)
